@@ -4,7 +4,7 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/cache"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
@@ -13,7 +13,7 @@
         http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/mvc
-        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd">
 
     <!--开启注解扫描-->
     <context:component-scan base-package="com.test">
@@ -36,4 +36,25 @@
     <bean id="mapperScaner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.test.dao" />
     </bean>
+    <!--配置spring申明式事务管理-->
+    <!--配置事务管理器-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!--配置事务通知-->
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="find*" read-only="true" propagation="SUPPORTS"/>-->
+            <!--<tx:method name="add" propagation="REQUIRED" rollback-for="Exception"/>-->
+            <!--<tx:method name="upd" propagation="REQUIRED" rollback-for="Exception"/>-->
+            <!--<tx:method name="search*" read-only="true" propagation="SUPPORTS"/>-->
+            <!--<tx:method name="get*" read-only="true" propagation="SUPPORTS"/>-->
+            <!--<tx:method name="*" read-only="false" propagation="REQUIRED" rollback-for="Exception"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
+
+    <!--配置AOP 增强-->
+    <!--<aop:config>-->
+        <!--<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.test.service.*(..))" />-->
+    <!--</aop:config>-->
 </beans>
