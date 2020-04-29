@@ -42,7 +42,19 @@
         <property name="defaultEncoding" value="UTF-8"></property>
     </bean>
 
+    <!--配置拦截器-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <!--配置拦截器对象-->
+            <bean class="com.test.interceptor.SysInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <!--  swagger静态文件路径 -->
     <mvc:resources mapping="/swagger/**" location="/WEB-INF/swagger/" cache-period="31556926"/>
     <bean class="com.test.config.SwaggerConfig" />
+
+    <!--配置异常处理器-->
+    <bean id="exceptionResolver" class="com.test.resolver.SysExceptionResolver"></bean>
 </beans>
